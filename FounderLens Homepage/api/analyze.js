@@ -12,10 +12,10 @@ export default async function handler(req, res) {
     }
 
     // Get the API key from environment variables
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      console.error('OPENAI_API_KEY environment variable is not set.');
+      console.error('GEMINI_API_KEY environment variable is not set.');
       return res.status(500).json({ error: 'Server configuration error: Missing API Key.' });
     }
 
@@ -31,36 +31,34 @@ The JSON object must have exactly these four keys:
 Startup Idea: "${idea}"
     `;
 
-    // Make the actual call to the AI provider
-    const aiResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    // Make the actual call to the Gemini API
+    const aiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "HTTP-Referer": "https://founderlens.vercel.app", // Optional placeholder for Vercel
-        "X-Title": "FounderLens Validation Tool",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        "model": "openai/gpt-3.5-turbo", // You can use other models here
-        "messages": [
-          { "role": "system", "content": "You are a helpful startup advisor that outputs strictly valid JSON." },
-          { "role": "user", "content": promptText }
-        ]
+        "systemInstruction": {
+          "parts": [{"text": "You are a helpful startup advisor that outputs strictly valid JSON."}]
+        },
+        "contents": [{
+          "parts": [{"text": promptText}]
+        }]
       })
     });
 
     if (!aiResponse.ok) {
       const errorData = await aiResponse.json().catch(() => ({}));
-      throw new Error(`AI API Request failed (${aiResponse.status}): ${errorData.error?.message || aiResponse.statusText}`);
+      throw new Error(`Gemini API Request failed (${aiResponse.status}): ${errorData.error?.message || aiResponse.statusText}`);
     }
 
     const data = await aiResponse.json();
         
-    if (!data.choices || data.choices.length === 0) {
-      throw new Error("No response received from the AI.");
+    if (!data.candidates || data.candidates.length === 0) {
+      throw new Error("No response received from Gemini.");
     }
 
-    let content = data.choices[0].message.content.trim();
+    let content = data.candidates[0].content.parts[0].text.trim();
     
     // Strip out markdown code blocks if the model mistakenly included them
     if (content.startsWith('```')) {
