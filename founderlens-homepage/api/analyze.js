@@ -22,11 +22,12 @@ export default async function handler(req, res) {
     const promptText = `
 You are an expert startup evaluator and venture capitalist. 
 Evaluate the following startup idea and return the response STRICTLY as a valid JSON object. Do NOT wrap it in markdown code blocks. Do not add any extra text or conversational filler.
-The JSON object must have exactly these four keys:
+The JSON object must have exactly these five keys:
 "audience": (string) Describe the target audience in 1-2 sentences.
 "demand": (string) Describe the potential market demand in 1-2 sentences.
 "monetization": (string) Suggest the best monetization strategies in 1-2 sentences.
 "risks": (string) Identify the biggest risks and challenges in 1-2 sentences.
+"sources": (array of strings) List the URLs of the proofs or fact-checking sources you used from Google Search.
 
 Startup Idea: "${idea}"
     `;
@@ -41,6 +42,9 @@ Startup Idea: "${idea}"
         "systemInstruction": {
           "parts": [{"text": "You are a helpful startup advisor that outputs strictly valid JSON."}]
         },
+        "tools": [
+          { "googleSearch": {} }
+        ],
         "contents": [{
           "parts": [{"text": promptText}]
         }]

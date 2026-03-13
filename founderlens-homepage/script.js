@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resDemand = document.getElementById('resDemand');
     const resMonetization = document.getElementById('resMonetization');
     const resRisks = document.getElementById('resRisks');
+    const resSources = document.getElementById('resSources');
 
     // Only attach event listeners if we are on the analyze page
     if (!analyzeBtn || !ideaInput) return;
@@ -65,5 +66,38 @@ document.addEventListener('DOMContentLoaded', () => {
         resDemand.textContent = parsedAnalysis.demand || "N/A";
         resMonetization.textContent = parsedAnalysis.monetization || "N/A";
         resRisks.textContent = parsedAnalysis.risks || "N/A";
+        
+        // Handle sources
+        resSources.innerHTML = '';
+        if (parsedAnalysis.sources && Array.isArray(parsedAnalysis.sources) && parsedAnalysis.sources.length > 0) {
+            parsedAnalysis.sources.forEach(source => {
+                const li = document.createElement('li');
+                li.style.marginBottom = "5px";
+                
+                const a = document.createElement('a');
+                a.href = source;
+                a.textContent = source;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                a.style.color = "#3b82f6";
+                a.style.textDecoration = "none";
+                a.style.wordBreak = "break-all";
+                
+                a.addEventListener('mouseover', () => {
+                    a.style.textDecoration = "underline";
+                });
+                a.addEventListener('mouseout', () => {
+                    a.style.textDecoration = "none";
+                });
+                
+                li.appendChild(a);
+                resSources.appendChild(li);
+            });
+        } else {
+            const li = document.createElement('li');
+            li.textContent = "No specific external sources cited.";
+            li.style.color = "#a1a1aa";
+            resSources.appendChild(li);
+        }
     }
 });
