@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze Idea - FounderLens</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                <img src="images/Gemini_Generated_Image_ademeoademeoadem.png" alt="FounderLens Logo" style="height: 40px;">
+                FounderLens
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="features.html">Features</a>
+            <a href="about.html">About</a>
+            <a href="analyze.html" class="cta-btn">Analyze Idea</a>
+        </div>
+    </nav>
+
+    <section id="tool" class="analysis-tool" style="min-height: calc(100vh - 180px); border-top: none;">
+        <div class="tool-container">
+            <h2>The Analyzer</h2>
+            <p>Describe your startup idea in 1-2 sentences.</p>
+            
+            <div class="input-group">
+                <textarea id="ideaInput" placeholder="e.g. A marketplace connecting local farmers directly with restaurant chefs to streamline fresh ingredient sourcing."></textarea>
+                <button id="analyzeBtn" class="analyze-btn">Analyze My Idea</button>
+            </div>
+            
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Analyzing market dynamics...</p>
+            </div>
+
+            <div id="results" class="results hidden">
+                <h3>Evaluation Results</h3>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h4>Target Audience</h4>
+                        <p id="resAudience"></p>
+                    </div>
+                    <div class="result-card">
+                        <h4>Market Demand</h4>
+                        <p id="resDemand"></p>
+                    </div>
+                    <div class="result-card">
+                        <h4>Monetization</h4>
+                        <p id="resMonetization"></p>
+                    </div>
+                    <div class="result-card">
+                        <h4>Risks & Challenges</h4>
+                        <p id="resRisks"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo">FounderLens</div>
+            <p>&copy; 2026 FounderLens. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
