@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analyze Idea - FounderLens</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -41,31 +41,28 @@
 
             <div id="results" class="results hidden">
                 <h3>Evaluation Results</h3>
-                <div class="results-grid">
-                    <div class="result-card">
-                        <h4>Target Audience</h4>
-                        <p id="resAudience"></p>
-                    </div>
-                    <div class="result-card">
-                        <h4>Market Demand</h4>
-                        <p id="resDemand"></p>
-                    </div>
-                    <div class="result-card">
-                        <h4>Monetization</h4>
-                        <p id="resMonetization"></p>
-                    </div>
-                    <div class="result-card">
-                        <h4>Risks & Challenges</h4>
-                        <p id="resRisks"></p>
-                    </div>
-                </div>
                 
-                <div class="results-grid" style="margin-top: 2rem; grid-template-columns: 1fr;">
-                    <div class="result-card" style="grid-column: 1 / -1;">
-                        <h4>Fact-Checking Sources</h4>
-                        <ul id="resSources" style="margin-top: 10px; padding-left: 20px; list-style-type: disc;"></ul>
-                    </div>
-                </div>
+                <!-- Score Section -->
+                <div id="scoreContainer" class="score-container" style="margin-bottom: 2rem;"></div>
+                
+                <!-- Key Insights -->
+                <div id="insightsContainer" class="insights-container result-card" style="margin-bottom: 2rem;"></div>
+
+                <!-- Structured Sections -->
+                <h4 style="margin-bottom: 15px; color: var(--gradient-1); text-align: center;">Detailed Analysis</h4>
+                <div id="sectionsContainer" class="results-grid"></div>
+
+                <!-- Competitors Table -->
+                <div id="competitorsContainer" class="competitors-container result-card" style="margin-top: 2rem;"></div>
+
+                <!-- SWOT Analysis -->
+                <div id="swotContainer" class="swot-container result-card" style="margin-top: 2rem;"></div>
+
+                <!-- Suggested Improvements -->
+                <div id="improvementsContainer" class="improvements-container result-card" style="margin-top: 2rem;"></div>
+
+                <!-- Sources -->
+                <div id="sourcesContainer" class="sources-container result-card" style="margin-top: 2rem;"></div>
             </div>
         </div>
     </section>
@@ -77,6 +74,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="components/ui.js"></script>
+    <script src="scripts/analyze.js"></script>
 </body>
 </html>

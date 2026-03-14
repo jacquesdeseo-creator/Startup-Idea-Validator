@@ -22,12 +22,44 @@ export default async function handler(req, res) {
     const promptText = `
 You are an expert startup evaluator and venture capitalist. 
 Evaluate the following startup idea and return the response STRICTLY as a valid JSON object. Do NOT wrap it in markdown code blocks. Do not add any extra text or conversational filler.
-The JSON object must have exactly these five keys:
-"audience": (string) Describe the target audience in 1-2 sentences.
-"demand": (string) Describe the potential market demand in 1-2 sentences.
-"monetization": (string) Suggest the best monetization strategies in 1-2 sentences.
-"risks": (string) Identify the biggest risks and challenges in 1-2 sentences.
-"sources": (array of strings) List the URLs of the proofs or fact-checking sources you used from Google Search.
+The JSON object must have exactly this structure:
+{
+  "viabilityScore": {
+    "total": (number 0-100) Overall score,
+    "breakdown": {
+      "demand": (number 0-10),
+      "competition": (number 0-10),
+      "revenue": (number 0-10),
+      "execution": (number 0-10),
+      "scalability": (number 0-10)
+    }
+  },
+  "sections": {
+    "summary": (string) Startup Idea Summary,
+    "targetCustomers": (string) Target Customers,
+    "marketDemand": (string) Market Demand,
+    "competitorLandscape": (string) Competitor Landscape,
+    "revenueModel": (string) Revenue Model,
+    "risks": (string) Risks,
+    "opportunities": (string) Opportunities
+  },
+  "competitors": [
+    {
+      "name": (string) Company Name,
+      "whatTheyDo": (string) What They Do,
+      "keyStrength": (string) Key Strength
+    }
+  ],
+  "swot": {
+    "strengths": [(array of strings) Strengths],
+    "weaknesses": [(array of strings) Weaknesses],
+    "opportunities": [(array of strings) Opportunities],
+    "threats": [(array of strings) Threats]
+  },
+  "keyInsights": [(array of strings) 3-5 most important insights],
+  "suggestedImprovements": [(array of strings) 3-5 suggestions for the founder],
+  "sources": [(array of strings) List the URLs of the proofs or fact-checking sources you used from Google Search]
+}
 
 Startup Idea: "${idea}"
     `;

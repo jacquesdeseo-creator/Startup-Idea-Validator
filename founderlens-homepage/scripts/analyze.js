@@ -4,11 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const loading = document.getElementById('loading');
     const results = document.getElementById('results');
 
-    const resAudience = document.getElementById('resAudience');
-    const resDemand = document.getElementById('resDemand');
-    const resMonetization = document.getElementById('resMonetization');
-    const resRisks = document.getElementById('resRisks');
-    const resSources = document.getElementById('resSources');
+    const scoreContainer = document.getElementById('scoreContainer');
+    const insightsContainer = document.getElementById('insightsContainer');
+    const sectionsContainer = document.getElementById('sectionsContainer');
+    const competitorsContainer = document.getElementById('competitorsContainer');
+    const swotContainer = document.getElementById('swotContainer');
+    const improvementsContainer = document.getElementById('improvementsContainer');
+    const sourcesContainer = document.getElementById('sourcesContainer');
 
     // Only attach event listeners if we are on the analyze page
     if (!analyzeBtn || !ideaInput) return;
@@ -62,42 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const parsedAnalysis = await response.json();
 
-        resAudience.textContent = parsedAnalysis.audience || "N/A";
-        resDemand.textContent = parsedAnalysis.demand || "N/A";
-        resMonetization.textContent = parsedAnalysis.monetization || "N/A";
-        resRisks.textContent = parsedAnalysis.risks || "N/A";
-        
-        // Handle sources
-        resSources.innerHTML = '';
-        if (parsedAnalysis.sources && Array.isArray(parsedAnalysis.sources) && parsedAnalysis.sources.length > 0) {
-            parsedAnalysis.sources.forEach(source => {
-                const li = document.createElement('li');
-                li.style.marginBottom = "5px";
-                
-                const a = document.createElement('a');
-                a.href = source;
-                a.textContent = source;
-                a.target = "_blank";
-                a.rel = "noopener noreferrer";
-                a.style.color = "#3b82f6";
-                a.style.textDecoration = "none";
-                a.style.wordBreak = "break-all";
-                
-                a.addEventListener('mouseover', () => {
-                    a.style.textDecoration = "underline";
-                });
-                a.addEventListener('mouseout', () => {
-                    a.style.textDecoration = "none";
-                });
-                
-                li.appendChild(a);
-                resSources.appendChild(li);
-            });
-        } else {
-            const li = document.createElement('li');
-            li.textContent = "No specific external sources cited.";
-            li.style.color = "#a1a1aa";
-            resSources.appendChild(li);
-        }
+        window.renderScoreCard(parsedAnalysis.viabilityScore, scoreContainer);
+        window.renderKeyInsights(parsedAnalysis.keyInsights, insightsContainer);
+        window.renderSections(parsedAnalysis.sections, sectionsContainer);
+        window.renderCompetitorTable(parsedAnalysis.competitors, competitorsContainer);
+        window.renderSWOT(parsedAnalysis.swot, swotContainer);
+        window.renderImprovements(parsedAnalysis.suggestedImprovements, improvementsContainer);
+        window.renderSources(parsedAnalysis.sources, sourcesContainer);
     }
 });

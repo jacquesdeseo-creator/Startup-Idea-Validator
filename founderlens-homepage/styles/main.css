@@ -339,8 +339,50 @@ footer {
     margin-top: 10px;
 }
 
+/* UI Components CSS */
+.score-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.score-circle { background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2)); border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: white; box-shadow: 0 4px 15px rgba(88, 166, 255, 0.4); }
+.score-number { font-size: 2rem; font-weight: 700; line-height: 1; }
+.score-max { font-size: 0.8rem; opacity: 0.8; }
+.score-breakdown { display: flex; flex-direction: column; gap: 15px; }
+.breakdown-item { display: flex; align-items: center; gap: 15px; }
+.breakdown-label { width: 100px; font-weight: 500; font-size: 0.9rem; color: var(--text-secondary); }
+.progress-bar-bg { flex: 1; height: 8px; background-color: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2)); border-radius: 4px; transition: width 1s ease-out; }
+.breakdown-value { width: 40px; font-weight: 600; font-size: 0.9rem; text-align: right; }
+
+.custom-list { list-style: none; padding-left: 0; }
+.custom-list li { position: relative; padding-left: 20px; margin-bottom: 10px; color: var(--text-secondary); }
+.custom-list li::before { content: "•"; position: absolute; left: 0; color: var(--accent); font-weight: bold; font-size: 1.2rem; line-height: 1; top: 0px; }
+
+.section-icon { font-size: 1.5rem; margin-right: 10px; vertical-align: middle; }
+
+.table-responsive { overflow-x: auto; margin-top: 15px; border-radius: 8px; border: 1px solid var(--border); }
+.competitor-table { width: 100%; border-collapse: collapse; text-align: left; }
+.competitor-table th, .competitor-table td { padding: 15px; border-bottom: 1px solid var(--border); }
+.competitor-table th { background-color: rgba(255, 255, 255, 0.02); color: var(--text-primary); font-weight: 600; }
+.competitor-table tr:last-child td { border-bottom: none; }
+.competitor-table td { color: var(--text-secondary); font-size: 0.95rem; }
+
+.swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.swot-quadrant { padding: 20px; border-radius: 8px; background: rgba(0, 0, 0, 0.2); border: 1px solid var(--border); }
+.swot-quadrant h5 { margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+.swot-quadrant.strengths { border-top: 3px solid #3fb950; }
+.swot-quadrant.strengths h5 { color: #3fb950; }
+.swot-quadrant.weaknesses { border-top: 3px solid #f85149; }
+.swot-quadrant.weaknesses h5 { color: #f85149; }
+.swot-quadrant.opportunities { border-top: 3px solid #58a6ff; }
+.swot-quadrant.opportunities h5 { color: #58a6ff; }
+.swot-quadrant.threats { border-top: 3px solid #d29922; }
+.swot-quadrant.threats h5 { color: #d29922; }
+
+.source-link { color: var(--accent); text-decoration: none; word-break: break-all; transition: opacity 0.3s; }
+.source-link:hover { opacity: 0.8; text-decoration: underline; }
+
 /* Responsive */
 @media (max-width: 768px) {
+    .swot-grid { grid-template-columns: 1fr; }
+
     .nav-links {
         display: none;
     }
