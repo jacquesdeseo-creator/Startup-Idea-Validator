@@ -77,9 +77,6 @@ Startup Idea: "${idea}"
         "tools": [
           { "googleSearch": {} }
         ],
-        "generationConfig": {
-          "responseMimeType": "application/json"
-        },
         "contents": [{
           "parts": [{"text": promptText}]
         }]
