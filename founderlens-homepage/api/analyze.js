@@ -109,7 +109,8 @@ Startup Idea: "${idea}"
     try {
         parsedAnalysis = JSON.parse(content);
     } catch (e) {
-        console.error("Failed to parse JSON from AI response:", content);
+        console.error("Failed to parse JSON from AI response. Raw content was:");
+        console.error(content);
         throw new Error("The AI returned a malformed response.");
     }
 
