@@ -22,6 +22,7 @@ export default async function handler(req, res) {
     const promptText = `
 You are an expert startup evaluator and venture capitalist. 
 Evaluate the following startup idea and return the response STRICTLY as a valid JSON object. Do NOT wrap it in markdown code blocks. Do not add any extra text or conversational filler.
+IMPORTANT: You are using the Google Search tool. Do NOT include any inline citation markers (like [1], [a], etc.) inside your strings. All quotes inside strings MUST be properly escaped.
 The JSON object must have exactly this structure:
 {
   "viabilityScore": {
@@ -94,14 +95,18 @@ Startup Idea: "${idea}"
       throw new Error("No response received from Gemini.");
     }
 
-    let content = data.candidates[0].content.parts[0].text;
+    let content = data.candidates[0].content.parts.map(p => p.text || "").join("");
     
-    // Robustly extract the JSON object to ignore any surrounding markdown or text
+    // Robustly extract the JSON object to ignore any surrounding markdown or grounding metadata
     const firstBrace = content.indexOf('{');
     const lastBrace = content.lastIndexOf('}');
     
     if (firstBrace !== -1 && lastBrace !== -1) {
         content = content.substring(firstBrace, lastBrace + 1);
+        
+        // Sometimes the search tool introduces unescaped newlines inside strings that break JSON.parse.
+        // We can do a rudimentary sweep to remove markdown codeblocks if they somehow ended up inside.
+        content = content.replace(/```json/gi, '').replace(/```/g, '');
     }
 
     // Attempt to parse the content to ensure it's valid JSON before sending it back
