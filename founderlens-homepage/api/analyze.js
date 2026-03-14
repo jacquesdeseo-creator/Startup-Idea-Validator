@@ -77,6 +77,9 @@ Startup Idea: "${idea}"
         "tools": [
           { "googleSearch": {} }
         ],
+        "generationConfig": {
+          "responseMimeType": "application/json"
+        },
         "contents": [{
           "parts": [{"text": promptText}]
         }]
@@ -94,11 +97,14 @@ Startup Idea: "${idea}"
       throw new Error("No response received from Gemini.");
     }
 
-    let content = data.candidates[0].content.parts[0].text.trim();
+    let content = data.candidates[0].content.parts[0].text;
     
-    // Strip out markdown code blocks if the model mistakenly included them
-    if (content.startsWith('```')) {
-        content = content.replace(/^```json/i, '').replace(/^```/, '').replace(/```$/, '').trim();
+    // Robustly extract the JSON object to ignore any surrounding markdown or text
+    const firstBrace = content.indexOf('{');
+    const lastBrace = content.lastIndexOf('}');
+    
+    if (firstBrace !== -1 && lastBrace !== -1) {
+        content = content.substring(firstBrace, lastBrace + 1);
     }
 
     // Attempt to parse the content to ensure it's valid JSON before sending it back
